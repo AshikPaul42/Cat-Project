@@ -1,0 +1,17 @@
+.Form{
+    width:50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Form button{
+    background-color: rgb(70, 70, 194);
+    color : white
+}
+
+.Form .input{
+    border-radius: 50%;
+}
