@@ -4,7 +4,7 @@ import Tweet from '../tweet/tweet'
 
 class Form extends Component {
 
-    API_URL = "mongodb+srv://Ashik:B#4e!dqcAAELVER@catcluster-gw3j1.mongodb.net/test?retryWrites=true&w=majority";
+    API_URL = 'https://reminiscent-browser.glitch.me/mews';
 
     constructor(props){
         super(props);
@@ -17,10 +17,9 @@ class Form extends Component {
     loadAllMews = () =>{
         fetch(this.API_URL)
             .then(res => res.json())
-            .then(mews =>{
-                mews.reverse();
+            .then(allmews =>{
                 this.setState({
-                    allTweets : mews
+                    allTweets : allmews
                 });
             });
     };
@@ -34,7 +33,8 @@ class Form extends Component {
 
         const meow = {
             name,
-            content
+            content,
+            created : new Date().toDateString()
         };
         fetch(this.API_URL, {
             method: 'POST',
@@ -46,10 +46,10 @@ class Form extends Component {
         .then(createdMew => {
             console.log(createdMew);
             formElements.reset();
-            formElements.style.display = 'none';
-            setTimeout(()=>{
-                formElements.style.display = '';
-            }, 30000)
+            // formElements.style.display = 'none';
+            // setTimeout(()=>{
+            //     formElements.style.display = '';
+            // }, 30000)
             this.loadAllMews();
         });
     }
@@ -70,7 +70,8 @@ class Form extends Component {
             </form>
             <br/>
             {this.state.allTweets.map((tweet)=>{
-                return <Tweet name={tweet.name} content={tweet.content} date={tweet.created}/>
+                if(tweet.name)
+                    return <Tweet name={tweet.name} content={tweet.content} date={tweet.created}/>
             })}
         </div>);
     }
