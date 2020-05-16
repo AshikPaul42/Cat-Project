@@ -1,17 +1,14 @@
+/* @import "~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss"; */
+
 .Form{
-    width:50%;
     margin: 0 auto;
+}
+
+.Form label{
+    color: white;
+}
+
+.alignItemsDown{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.Form button{
-    background-color: rgb(70, 70, 194);
-    color : white
-}
-
-.Form .input{
-    border-radius: 50%;
+    align-items: flex-end;
 }

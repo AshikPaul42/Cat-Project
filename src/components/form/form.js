@@ -1,17 +1,22 @@
 import React, { Component }from 'react';
-import './form.css'
-import Tweet from '../tweet/tweet'
+import './form.css';
+import Tweet from '../tweet/tweet';
+// import {  } from 'office-ui-fabric-react/lib/TextField';
+import { TextField, PrimaryButton } from 'office-ui-fabric-react';
 
-class Form extends Component {
+class MainForm extends Component {
 
-    API_URL = 'https://reminiscent-browser.glitch.me/mews';
+    API_URL = 'https://cat-lovers-server.herokuapp.com/mews';
 
     constructor(props){
         super(props);
         this.state ={
-            allTweets : []
+            allTweets : [],
+            name : "",
+            description : ""
         };
         this.loadAllMews();
+        console.log("Hello");
     }   
 
     loadAllMews = () =>{
@@ -26,10 +31,8 @@ class Form extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        const formElements = document.querySelector('form');
-        const formData = new FormData(formElements);
-        const name = formData.get("name");
-        const content = formData.get("content");
+        const name = document.querySelector('#name').value;
+        const content = document.querySelector('#content').value;
 
         const meow = {
             name,
@@ -43,12 +46,11 @@ class Form extends Component {
                 'content-type' : 'application/json'
             }
         }).then(res=> res.json())
-        .then(createdMew => {
-            console.log(createdMew);
-            formElements.reset();
-            // formElements.style.display = 'none';
+        .then(()=> {
+            document.querySelector('#name').value = "";
+            document.querySelector('#content').value = "";
             // setTimeout(()=>{
-            //     formElements.style.display = '';
+            //     document.querySelector('form').style.display = '';
             // }, 30000)
             this.loadAllMews();
         });
@@ -56,25 +58,35 @@ class Form extends Component {
 
     render(){
         return (
-        <div className="Form">
-            <form>
-                <label>Name</label>
+            <div className="Form ms-Grid" dir="ltr">
+                <div className="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+                <div className={"ms-Grid-row alignItemsDown"}>
+                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div>
+                    <div className="ms-Grid-col ms-sm12 ms-md2 ms-lg2">
+                        <TextField label="Name " required id="name"/>
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md7 ms-lg7">
+                        <TextField label="Description " required id="content" rows={1}/>
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1">
+                        <PrimaryButton onClick={this.onSubmit}>Submit</PrimaryButton>
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div>
+                </div>
                 <br/>
-                <input type="text" name="name" id="name" required/>
-                <br/><br/>
-                <label>Description</label>
-                <br/>
-                <textarea type="text" name="content" id="content" required/>
-                <br/><br/>
-                <button onClick={this.onSubmit}>Submit</button>
-            </form>
-            <br/>
-            {this.state.allTweets.map((tweet)=>{
-                if(tweet.name)
-                    return <Tweet name={tweet.name} content={tweet.content} date={tweet.created}/>
-            })}
-        </div>);
+                <div className="ms-Grid-row">
+                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div> 
+                    <div className="ms-Grid-col ms-sm12 ms-md10 ms-lg10">   
+                        {this.state.allTweets.map((tweet)=>{
+                            if(tweet.name)
+                                return <Tweet name={tweet.name} content={tweet.content} date={tweet.created}/>
+                        })}
+                    </div>
+                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div>
+                </div>
+                </div>
+            </div>);
     }
 }
 
-export default Form;
+export default MainForm;
