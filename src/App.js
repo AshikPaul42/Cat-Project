@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from './components/form/form'
-import 'office-ui-fabric-react/dist/css/fabric.min.css';
 import MapUsers from './components/mapUsers/mapUsers';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component{
 
@@ -12,8 +12,6 @@ class App extends Component{
     super(props);
     this.getLocation();
   }
-
-
 
   getLocation = () => {
     fetch('https://ipapi.co/json/')
@@ -38,30 +36,30 @@ class App extends Component{
             }).then(res=> res.json())
             .then((res)=> { 
               console.log(res); 
-            });
         }).catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
     });
+  });
 }
 
   render(){
     return (
-      <div className="App container">
-        <header className="blog-header py-3">
-          <div className="row flex-nowrap justify-content-between align-items-center">
-            <div className="col-2 pt-1">
-              <a className="text-muted" href="https://www.linkedin.com/in/ashik-paul-2ab793130/">Contact</a>
+      <div className="App container-fluid"> 
+            <div className="navDark d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow orange">
+              <h5 className="my-0 mr-md-auto font-weight-normal">Blah Rules</h5>
+              <nav className="my-2 my-md-0 mr-md-3 ">
+                <a className="p-2 text-light" href="#">Users</a>
+                <a className="p-2 text-light" href="#">Porjects</a>
+                <a className="p-2 text-light" href="#">About</a>
+                <a className="p-2 text-light" href="https://www.linkedin.com/in/ashik-paul-2ab793130/">Contact</a>
+                {/* <a className="p-2 text-light" href="#">Support</a> */}
+              </nav>
             </div>
-            <div className="col-6 text-center">
-              <h3 className="font-weight-normal blog-header-logo text-dark">Twitter for cats and dogs</h3>
-            </div>
-            <div className="col-2 d-flex justify-content-end align-items-center"></div>
-          </div>
-        </header>
-        <hr/>
+          <br/>
         <Form/>
         <MapUsers/>
+        <br/><br/>
       </div>
     );
   }

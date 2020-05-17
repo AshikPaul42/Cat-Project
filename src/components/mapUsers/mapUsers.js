@@ -1,8 +1,6 @@
 import React, { Component }from 'react';
-// import * as LMap from 'leaflet';
-import Map from 'pigeon-maps'
-import Marker from 'pigeon-marker'
-import Overlay from 'pigeon-overlay'
+import './mapUsers.css'
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 
 class MapUsers extends Component {
 
@@ -20,24 +18,31 @@ class MapUsers extends Component {
         fetch(this.API_URL)
             .then(res => res.json())
             .then(locations =>{
-                this.setState({
-                    locations : locations
-                });
-                console.log(locations);
+                this.setState({ locations : locations });
             });
     }
 
     render(){
-        return (<div>
-            <Map center={[50.879, 4.6997]} zoom={3} width={1000} height={1000}>
-                {this.state.locations.map((loc)=>{
-                    return <Marker anchor={[parseFloat(loc.latitude), parseFloat(loc.longitude)]} payload={1} onClick={({ event, anchor, payload }) => {}} />
-                })}
-
-                <Overlay anchor={[50.879, 4.6997]} offset={[120, 79]}>
-                <img src='pigeon.jpg' width={240} height={158} alt='' />
-                </Overlay>
-            </Map>
+        const Map = ReactMapboxGl({
+            accessToken:'pk.eyJ1IjoiYXNoaWtwYXVsIiwiYSI6ImNrYWFwdWlqYjB1dHYzMnM5ZmhybXoweXUifQ.c-RJnUB83cyvk-o0iUnhQQ'
+        });
+        return (<div className="MapMain">
+                <div id="MapBoxDiv">
+                    <Map
+                        style="mapbox://styles/mapbox/dark-v10"
+                        center={[77.5946, 12.9716]}
+                        zoom={[3]}
+                        containerStyle={{
+                            height: '720px',
+                            width: '100%'
+                        }}>
+                        <Layer type="symbol" id="marker" layout={{ 'icon-image': 'rocket-15' }}>
+                            {this.state.locations.length ? this.state.locations.map((loc)=>{
+                                return <Feature coordinates={[ loc.longitude, loc.latitude ]} />
+                            }) : ""}
+                        </Layer>
+                    </Map>
+                </div>
         </div>);
     }
 }

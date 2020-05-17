@@ -2,3 +2,13 @@
     background-color: black;
     border:1px solid black;
 }
+
+#MapBoxDiv{
+    height: 720px;
+    width: 100%;
+}
+
+.MapMain{
+    background-color: lightgrey;
+    padding: 2%;
+}

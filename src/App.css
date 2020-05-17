@@ -1,6 +1,3 @@
-.App {
-  margin: 0px auto;
-}
 
 .App-header {
   display: flex;
@@ -10,4 +7,8 @@
   font-size: calc(10px + 2vmin);
 }
 
+.navDark{
+  background: black !important;
+  color: white !important;
+}
 

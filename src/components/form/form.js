@@ -60,30 +60,24 @@ class MainForm extends Component {
         return (
             <div className="Form ms-Grid" dir="ltr">
                 <div className="jumbotron p-3 p-md-5 text-white rounded bg-dark">
-                <div className={"ms-Grid-row alignItemsDown"}>
-                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div>
-                    <div className="ms-Grid-col ms-sm12 ms-md2 ms-lg2">
-                        <TextField label="Name " required id="name"/>
+                <div className={"row mb-2 alignItemsDown"}>
+                    <div className="col-md-2 col-sm-12 col-lg-2">
+                        <TextField label="Your pet's name " required id="name"/>
                     </div>
-                    <div className="ms-Grid-col ms-sm12 ms-md7 ms-lg7">
-                        <TextField label="Description " required id="content" rows={1}/>
+                    <div className="col-md-8 col-sm-12 col-lg-9">
+                        <TextField label="Describe your pet " required id="content" rows={1}/>
                     </div>
-                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1">
+                    <div className="col-md-2 col-sm-12 col-lg-1">
                         <PrimaryButton onClick={this.onSubmit}>Submit</PrimaryButton>
                     </div>
-                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div>
                 </div>
                 <br/>
-                <div className="ms-Grid-row">
-                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div> 
-                    <div className="ms-Grid-col ms-sm12 ms-md10 ms-lg10">   
+                </div>
+                <div className="row"> 
                         {this.state.allTweets.map((tweet)=>{
                             if(tweet.name)
                                 return <Tweet name={tweet.name} content={tweet.content} date={tweet.created}/>
                         })}
-                    </div>
-                    <div className="ms-Grid-col ms-sm12 ms-md1 ms-lg1"></div>
-                </div>
                 </div>
             </div>);
     }
