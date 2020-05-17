@@ -21,24 +21,26 @@ class App extends Component{
             return;
           }
           response.json().then((data) => {
-            let locData = {
-              IP : data.ip,
-              city : data.city,
-              latitude : data.latitude,
-              longitude : data.longitude
-            };
-            fetch(this.LOC_URL, {
-              method: 'POST',
-              body : JSON.stringify(locData),
-              headers:{
-                  'content-type' : 'application/json'
-              }
-            }).then(res=> res.json())
-            .then((res)=> { 
-              console.log(res); 
-        }).catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
+            if(data.latitude != "12.9721" &&  data.longitude != "77.5933"){
+              let locData = {
+                IP : data.ip,
+                city : data.city,
+                latitude : data.latitude,
+                longitude : data.longitude
+              };
+              fetch(this.LOC_URL, {
+                method: 'POST',
+                body : JSON.stringify(locData),
+                headers:{
+                    'content-type' : 'application/json'
+                }
+              }).then(res=> res.json())
+              .then((res)=> { 
+                console.log(res); 
+                }).catch(function(err) {
+                console.log('Fetch Error :-S', err);
+              });
+          }
     });
   });
 }
