@@ -7,10 +7,56 @@ import MapUsers from './components/mapUsers/mapUsers';
 class App extends Component{
 
   LOC_URL = 'https://cat-lovers-server.herokuapp.com/locations';
+  mylatitude = "";
+  mylongitude = "";
+  city = "";
+  ip = "";
 
   constructor(props){
     super(props);
+    // this.getLocation();
+    this.geoFindMe();
+  }
+
+  success = (position) => {
+    this.mylongitude = position.coords.longitude;
+    this.mylatitude = position.coords.latitude;
+    this.saveLocation()
+  }
+
+  error = () => {
     this.getLocation();
+  }
+
+  geoFindMe = () => {
+  
+    if(!navigator.geolocation) {
+     
+    } else {
+      navigator.geolocation.getCurrentPosition(this.success, this.error);
+    }
+  
+  }
+
+  saveLocation(){
+    let locData = {
+      IP : this.ip,
+      city : this.city,
+      latitude : this.mylatitude,
+      longitude : this.mylongitude
+    };
+    fetch(this.LOC_URL, {
+      method: 'POST',
+      body : JSON.stringify(locData),
+      headers:{
+          'content-type' : 'application/json'
+      }
+    }).then(res=> res.json())
+    .then((res)=> { 
+      console.log(res); 
+      }).catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
   }
 
   getLocation = () => {
@@ -21,25 +67,13 @@ class App extends Component{
             return;
           }
           response.json().then((data) => {
+            this.mylongitude = data.longitude;
+            this.mylatitude = data.latitude;
+            this.city = data.city;
+            this.ip = data.ip;
+            this.saveLocation();
             // if(data.latitude != "12.9721" || data.longitude != "77.5933"){
-              let locData = {
-                IP : data.ip,
-                city : data.city,
-                latitude : data.latitude,
-                longitude : data.longitude
-              };
-              fetch(this.LOC_URL, {
-                method: 'POST',
-                body : JSON.stringify(locData),
-                headers:{
-                    'content-type' : 'application/json'
-                }
-              }).then(res=> res.json())
-              .then((res)=> { 
-                console.log(res); 
-                }).catch(function(err) {
-                console.log('Fetch Error :-S', err);
-              });
+              
           // }
     });
   });
