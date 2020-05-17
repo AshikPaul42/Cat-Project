@@ -21,7 +21,7 @@ class App extends Component{
             return;
           }
           response.json().then((data) => {
-            if(data.latitude != "12.9721" &&  data.longitude != "77.5933"){
+            if(data.latitude != "12.9721" || data.longitude != "77.5933"){
               let locData = {
                 IP : data.ip,
                 city : data.city,
